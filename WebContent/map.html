@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>ゼミまっぷ</title>
+
+	<script type="text/javascript" src="dwr/engine.js"></script>
+    <script type="text/javascript" src="dwr/util.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.serialize.js"></script>
+    <script type="text/javascript" src="dwr/interface/LmmManager.js"></script>
+    <script type="text/javascript" src="js/MemberMap.js"></script>
+	<link href="css/style1.css" rel="stylesheet" type="text/css" />
+
+    <script>
+    	$(document).ready(function(){
+			MemberMap.clearMember();
+			MemberMap.clearIconConfig();
+
+			MemberMap.addIconConfig([101, 102], "在室", "rgb(0, 255, 0)");
+			MemberMap.addIconConfig(103, "授業", "rgb(255, 255, 0)");
+			MemberMap.setIconDefaultConfig("退室", "rgb(230, 230, 230)");
+			MemberMap.addMember("岸", 40, 220, MemberMap.TTOP);
+			MemberMap.addMember("門", 120, 105, MemberMap.TTOP);
+			MemberMap.addMember("角", 40, 310, MemberMap.TTOP);
+			MemberMap.addMember("りょーくん", 285, 318, MemberMap.TTOP);
+			MemberMap.addMember("きたば", 410, 485 , MemberMap.TTOP);
+			MemberMap.addMember("しんや", 410, 405 , MemberMap.TTOP);
+			MemberMap.addMember("ぞえ",  40, 585 , MemberMap.TTOP);
+			MemberMap.addMember("清水",  40, 680 , MemberMap.TTOP);
+			MemberMap.addMember("ギダ",  120, 520 , MemberMap.TTOP);
+			MemberMap.addMember("林修", 300, 830 , MemberMap.TTOP);
+			MemberMap.addMember("上山", 410, 740 , MemberMap.TTOP);
+			MemberMap.addMember("三井", 410, 670 , MemberMap.TTOP);
+			MemberMap.addMember("でこぽん", 40, 880 , MemberMap.TTOP);
+			MemberMap.addMember("きーち", 130, 970 , MemberMap.TTOP);
+			MemberMap.addMember("うっちー",  40, 785 , MemberMap.TTOP);
+
+
+			MemberMap.backgroundImg = "semimap.png";
+			MemberMap.fontType = "18px sans-serif";
+			MemberMap.setIconSize(60, 30);
+
+    		setInterval("update()", 10000);
+    		update();
+    	});
+
+		function pressUpdateButton(){
+			MemberMap.draw("test_canvas", 450, 991);
+		}
+
+		function update(){
+			pressUpdateButton();
+		}
+
+    </script>
+
+</head>
+
+<body>
+<div id="content">
+	<h1 class="cen">ゼミ在室管理システム</h1>
+	<a  href="index.html">topに戻る</a>
+	<div style="text-align:right">
+		<button onclick="update()">update</button><br>
+	</div>
+	<hr>
+
+
+	<div id="map" class="page_centering">
+	<canvas id="test_canvas" width="450" height="1000"></canvas>
+	</div>
+
+
+
+</div>
+
+
+<div id="footer">
+	<i>Marshmallow-warriors</i>
+	<i>2015/10/04</i>
+</div>
+</body>
+
+</html>
