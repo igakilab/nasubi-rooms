@@ -1,30 +1,13 @@
 package mongodb;
 
-import com.mongodb.MongoClient;
+//import com.mongodb.MongoClient;
 
 public class ZahyoMongo {
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		MongoClient client = new MongoClient("mongodb-server");
-		//MongoCollection<Document> coll = client.getDatabase("myproject-room").getCollection("beacons");
 
-		/*Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.SECOND, -60);
-
-		FindIterable<Document> result11 = coll.find(Filters.and(Filters.eq("receiver", "1号機"), Filters.eq("minor", 101),Filters.gte("date", cal.getTime())));
-		FindIterable<Document> result12 = coll.find(Filters.and(Filters.eq("receiver", "1号機"), Filters.eq("minor", 102),Filters.gte("date", cal.getTime())));
-		FindIterable<Document> result21 = coll.find(Filters.and(Filters.eq("receiver", "2号機"), Filters.eq("minor", 101),Filters.gte("date", cal.getTime())));
-		FindIterable<Document> result22 = coll.find(Filters.and(Filters.eq("receiver", "2号機"), Filters.eq("minor", 102),Filters.gte("date", cal.getTime())));
-		FindIterable<Document> result31 = coll.find(Filters.and(Filters.eq("receiver", "3号機"), Filters.eq("minor", 101),Filters.gte("date", cal.getTime())));
-		FindIterable<Document> result32 = coll.find(Filters.and(Filters.eq("receiver", "3号機"), Filters.eq("minor", 102),Filters.gte("date", cal.getTime())));
-
-
-
-		MongoCollection<Document> coll2 = client.getDatabase("myproject-room").getCollection("beacons1mz");
-		coll2.insertMany(data);*/
 		client.close();
-	}
-
-
+	}*/
 	public static RPoint getPosition(RCircle c1, RCircle c2, RCircle c3){
 		RPoint p1 = new RPoint();
 		RLinear l1 = new RLinear();

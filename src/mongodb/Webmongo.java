@@ -38,7 +38,6 @@ public class Webmongo {
 			System.out.print("receiver1 - 101 : ");
 			try{
 				double val11 = doc.getDouble("距離");
-				System.out.println(val11);
 				if(!Double.isNaN(val11)){
 					sum11 += val11;
 					cnt11++;
@@ -222,25 +221,43 @@ public class Webmongo {
 		c2.r = ave21;
 	//c3.rに平均距離をセットする
 		c3.r = ave31;
-
 	//101の座標計算をする
 		RPoint p1 = ZahyoMongo.getPosition(c1, c2, c3);
+
+
+	/*RCircleにビーコン102の1～3号機からの平均距離を設定する*/
+
+	//c1.rに平均距離をセットする
+		c1.r = ave12;
+	//c2.rに平均距離をセットする
+		c2.r = ave22;
+	//c3.rに平均距離をセットする
+		c3.r = ave32;
+	//102の座標計算をする
+		RPoint p2 = ZahyoMongo.getPosition(c1, c2, c3);
+
 
 	/*mongoDBにぶちこむための準備*/
 
 	//ドキュメントを初期化する
 		Document doc1 = new Document();
+		Document doc2 = new Document();
 	//ドキュメントに値を設定する
 		doc1.append("minor", 101)
 			.append("x座標", p1.x)
 			.append("y座標", p1.y)
 			.append("date", now);
+
+		doc2.append("minor", 102)
+			.append("x座標", p2.x)
+			.append("y座標", p2.y)
+			.append("date", now);
+
 	//コレクションを取得する
 	MongoCollection<Document> coll4 = client.getDatabase("myproject-room").getCollection("beacons1mz");
 	//データベースに登録する
 	coll4.insertOne(doc1);
-
-
+	coll4.insertOne(doc2);
 
 	client.close();
 	}
