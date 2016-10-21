@@ -20,7 +20,7 @@ import com.mongodb.client.model.Filters;
  * @author ryokun
  *
  */
-public class BeaconAggregator {
+public class BeaconDataFetcher {
 	//データベースのコレクション名の設定
 	public static String DB_NAME = "myproject-room";
 	public static String COL_NAME = "beacons";
@@ -34,7 +34,7 @@ public class BeaconAggregator {
 	 * このクラスのコンストラクタです。
 	 * @param client 接続するdbのクライアント
 	 */
-	public BeaconAggregator(MongoClient client){
+	public BeaconDataFetcher(MongoClient client){
 		deadline = null;
 		collection = client.getDatabase(DB_NAME).getCollection(COL_NAME);
 	}
@@ -97,11 +97,19 @@ public class BeaconAggregator {
 
 		//クエリーを発行する
 		AggregateIterable<Document> result = collection.aggregate(query);
+		for(Document doc : result){
+			System.out.println(doc.toJson());
+		}
 
 		//結果を配列に入れる
 		List<Integer> beaconList = new ArrayList<Integer>();
 		for(Document doc : result){
-			beaconList.add(doc.getInteger("_id"));
+			Object obj = doc.get("_id");
+			if( obj instanceof Integer ){
+				beaconList.add((Integer)obj);
+			}else if( obj instanceof Double ){
+				beaconList.add(((Double)obj).intValue());
+			}
 		}
 
 		return beaconList;
