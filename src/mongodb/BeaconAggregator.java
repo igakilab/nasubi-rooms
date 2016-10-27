@@ -2,6 +2,7 @@ package mongodb;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,35 @@ import com.mongodb.client.model.Filters;
  *
  */
 public class BeaconAggregator {
+	public static void main (String[] args){
+		//mongodbの接続
+		MongoClient client = new MongoClient("150.89.234.253");
+		//クラスの初期化
+		BeaconAggregator aggr = new BeaconAggregator(client);
+
+		//期限を設定
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.SECOND, -60);
+		aggr.setDeadline(cal.getTime());
+
+		//認識されたビーコンの一覧を取得
+		List<Integer> beacons = aggr.getBeaconList();
+
+		for(Integer minor : beacons){
+			//そのビーコンが認識されている受信機のリスト
+			List<String> receivers = aggr.getBeaconReceiverList(minor);
+			//if(receivers >= 3){
+				System.out.println(minor + ": " + receivers.toString());
+			//}
+
+			//そのビーコンと受信機との平均距離を取得する
+			double dist = aggr.getDistanceAverage(101, "1号機");
+			System.out.println("101 - 1号機: " + dist);
+		}
+
+		client.close();
+	}
+
 	//データベースのコレクション名の設定
 	public static String DB_NAME = "myproject-room";
 	public static String COL_NAME = "beacons";
