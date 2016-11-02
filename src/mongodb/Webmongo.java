@@ -42,6 +42,7 @@ public class Webmongo {
 				RCircle[] c = new RCircle[3];
 
 				for(int j=0; j<receivers.size(); j++){
+					c[j] = new RCircle();
 					Document doc = coll3.find(Filters.eq("name", receivers.get(j))).first();
 				//x座標を取得する
 					double x = doc.getDouble("x");
@@ -54,15 +55,18 @@ public class Webmongo {
 			    //平均距離をセットする
 			    	c[j].r = coll1.getDistanceAverage(minor, receivers.get(j));
 			    	tmp = c[j].r;
+			    	System.out.println(c[j].toString());
+
 			    //beacon1mに平均距離の配列を登録する
 			    	coll2.insertOne(new Document("receiver", receivers.get(j))
-			    		.append("minor", beacons.get(j))
+			    		.append("minor", beacons.get(i))
 			    		.append("平均距離",tmp)
-			    		.append("date",cal2));
+			    		.append("date",cal2.getTime()));
 				}
 
 			//座標計算をする
 				RPoint p1 = ZahyoMongo.getPosition(c[0],c[1],c[2]);
+					System.out.println(p1.toString());
 
 			/*mongoDBにぶちこむための準備*/
 			//ドキュメントを初期化する
@@ -71,7 +75,7 @@ public class Webmongo {
 				doc1.append("minor", beacons.get(0))
 					.append("x座標", p1.x)
 					.append("y座標", p1.y)
-					.append("date", cal2);
+					.append("date", cal2.getTime());
 			//データベースに登録する
 			coll4.insertOne(doc1);
 
@@ -82,7 +86,3 @@ public class Webmongo {
 		client.close();
 	}
 }
-
-
-
-
