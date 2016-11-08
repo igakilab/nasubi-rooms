@@ -4,14 +4,19 @@
 	<meta charset="utf-8">
 	<title>ゼミ室マップ2016</title>
 	<script type="text/javascript">
+	onload = function(){
+			draw();
+	}
+
 	  function draw(){
 	  	var canvas = document.getElementById('zemi2016');
-	  	if (canvas.getContext) {
+	  	if ( ! canvas || ! canvas.getContext) { return false;}
 			var ctx = canvas.getContext('2d');
 			var img = new Image();
-			img.scr = "ゼミ室マップ2016.png";
-			ctx.drawImage(Img, 0, 0);
-	  	}
+			img.src = "ゼミ室マップ2016.png?" + new Date().getTime();
+			img.onload = function() {
+				ctx.drawImage(img, 0, 0);
+			}
 	  }
 	 </script>
 	 <style type="text/css">
@@ -19,7 +24,7 @@
 	 </style>
 </head>
 
-<body onload="draw();">
-	<canvas id="zemi2016" width="900" height="1000"></canvas>
+<body>
+	<canvas id="zemi2016" width="870" height="1220"></canvas>
 </body>
 </html>

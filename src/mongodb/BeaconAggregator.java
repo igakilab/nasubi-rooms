@@ -11,6 +11,7 @@ import org.bson.conversions.Bson;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
@@ -47,6 +48,9 @@ public class BeaconAggregator {
 			double dist = aggr.getDistanceAverage(101, "1号機");
 			System.out.println("101 - 1号機: " + dist);
 		}
+		
+		aggr.getBeaconPositions(101).forEach((p) ->
+			System.out.println(p.toString()));
 
 		client.close();
 	}
@@ -182,5 +186,26 @@ public class BeaconAggregator {
 		}else{
 			return 0;
 		}
+	}
+	
+	/**
+	 * ビーコンの座標の一覧を取得します
+	 * @param beaconId 対象のビーコンIDです
+	 * @return
+	 */
+	public List<RPoint> getBeaconPositions(int beaconId){
+		//クエリーの作成
+		Bson filter = createFilter(beaconId, null, null);
+		
+		//結果の取得
+		FindIterable<Document> result = collection.find(filter);
+		List<RPoint> positions = new ArrayList<RPoint>();
+		
+		//変換
+		for(Document doc : result){
+			positions.add(new RPoint(doc.getDouble("x"), doc.getDouble("y")));
+		}
+		
+		return positions;
 	}
 }
