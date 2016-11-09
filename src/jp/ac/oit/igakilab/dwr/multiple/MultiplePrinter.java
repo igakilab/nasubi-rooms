@@ -27,7 +27,6 @@ public class MultiplePrinter {
 	    	String str = "x = " + p.getX() + ", y = " + p.getY();
 	    	list.add(str);
 	    }
-
 	    return list;
 	}
 
