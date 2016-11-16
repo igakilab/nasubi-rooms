@@ -1,136 +1,55 @@
 var MemberMap = {};
 
-MemberMap.members = [];
-MemberMap.iconConfigs = [];
-MemberMap.iconDefaultConfig = {code: 0, str:"×", color:"rgb(230, 230, 230)"};
+MemberMap.points = [];
+
+MemberMap.originX = 28;
+MemberMap.originY = 1025;
+
 
 MemberMap.backgroundImg = null;
 
-MemberMap.TRIGHT = 100;
-MemberMap.TLEFT = 101;
-MemberMap.TTOP = 102;
-MemberMap.TBOTTOM = 103;
 
-MemberMap.defaultFillColor = "rgba(0, 0, 0, 1)";
-
-//ユーザが変更してよい変数
-//アイコンの大きさC
-MemberMap.memberRectWidth = 30;
-MemberMap.memberRectHeight = 30;
-//フォントの種類
-MemberMap.fontType = null;
-//TBOTTOM指定時のずれ
-MemberMap.tBottomGap = 15;
-
-
-MemberMap.addMember = function(n0, dx0, dy0, ts0){
-	this.members[this.members.length] = {
-		name: n0, dx: dx0, dy: dy0, text_side: ts0
-	}
-}
-
-MemberMap.clearMember = function(){
-	this.members = new Array();
-}
-
-MemberMap.addIconConfig = function(c0, s0, cl0){
-	this.iconConfigs[this.iconConfigs.length] = {
-		code: c0, str: s0, color: cl0
+MemberMap.addPoint = function(x0, y0, name){
+	this.points[this.points.length] = {
+		x: x0, y: y0, name: name
 	};
 }
 
-MemberMap.clearIconConfig = function(){
-	this.iconConfigs = new Array();
+/*
+ * 点を描画するメソッド
+ * 引数で与えられたx0, y0の位置に半径r0の円を書く
+ */
+MemberMap.drawPoint = function(ctx, x0, y0){
+	//点
+    ctx.beginPath();
+    ctx.arc(x0,y0,8,0,Math.PI*2.0,true);
+    ctx.fill();
 }
 
-MemberMap.setIconDefaultConfig = function(s0, cl0){
-	this.iconDefaultConfig = {
-		code: 0, str: s0, color: cl0
-	};
+/*
+ * 点が誰のなのか識別するためのメソッド
+ */
+MemberMap.drawName = function(ctx, x0, y0, name){
+	console.log(x0,y0,name);
+	ctx.fillText(name, x0, y0);
 }
 
-MemberMap.setIconSize = function(w0, h0){
-	this.memberRectWidth = w0;
-	this.memberRectHeight = h0;
+MemberMap.clearPoints = function(){
+	this.points = new Array();
 }
 
-MemberMap.getIconConfig = function(code){
-	for(var i=0; i<this.iconConfigs.length; i++){
-		if( Array.isArray(this.iconConfigs[i].code) ){
-			for(var j=0; j<this.iconConfigs[i].code.length; j++){
-				if( code == this.iconConfigs[i].code[j] ){
-					return this.iconConfigs[i];
-				}
-			}
-		}else{
-			if( code == this.iconConfigs[i].code ){
-				return this.iconConfigs[i];
-			}
-		}
-	}
-	return this.iconDefaultConfig;
-}
+/*
+ * 基準点と照らし合わせて、マップ上の座標を計算するメソッド
+ * 基準点からの距離で足し算引き算
+ * 実際の座標(m)からキャンバス(px)への変換
+ */
+MemberMap.calcAbstractPoint = function(x0, y0){
+	var ax = x0 * 120;
+	var ay = y0 * 120;
+	ax = ax + this.originX;
+	ay = ay + this.originY;
 
-MemberMap.isDefined = function(val){
-	return (val !== undefined && val != null);
-}
-
-MemberMap.drawMemberIcon = function(ctx, name, cx, cy, nstr_f, code){
-	var dw = this.memberRectWidth;
-	var dh = this.memberRectHeight;
-	var dx = cx - (dw / 2);
-	var dy = cy - (dh / 2);
-	var ic_conf = this.getIconConfig(code);
-
-	if( this.fontType != null ) ctx.font = this.fontType;
-	var nmet = ctx.measureText(name);
-	var nt_dx, nt_dy, nt_align;
-	switch( nstr_f ){
-	case this.TLEFT:
-		nt_dx = dx - 5;
-		nt_dy = dy + dh - 5;
-		nt_align = "right";
-		break;
-	case this.TTOP:
-		nt_dx = cx;
-		nt_dy = dy - 5;
-		nt_align = "center";
-		break;
-	case this.TBOTTOM:
-		nt_dx = cx;
-		nt_dy = dy + dh + 5 + this.tBottomGap;
-		nt_align = "center";
-		break;
-	default:
-		nt_dx = dx + dw + 5;
-		nt_dy = dy + dh - 5;
-		nt_align = "left";
-		break;
-	}
-
-	if( this.fontType != null ) ctx.font = this.fontType;
-
-	if( this.isDefined(ic_conf.color) ){
-		ctx.fillStyle = ic_conf.color;
-		ctx.fillRect(dx, dy, dw, dh);
-		ctx.fillStyle = this.defaultFillColor;
-	}
-	ctx.strokeRect(dx, dy, dw, dh);
-	ctx.textAlign = "center";
-	ctx.fillText(ic_conf.str, cx , dy + dh -5, dw-6);
-	ctx.textAlign = nt_align;
-	ctx.fillText(name, nt_dx, nt_dy);
-}
-
-MemberMap.drawMember = function(ctx, idx){
-	var mdx = this.members[idx].dx;
-	var mdy = this.members[idx].dy;
-	var mna = this.members[idx].name;
-	var tsd = this.members[idx].text_side;
-
-	LmmManager.getMemberState(mna, function(inf){
-		MemberMap.drawMemberIcon(ctx, mna, mdx, mdy, tsd, inf.stateCode);
-	});
+	return {x: ax, y: ay};
 }
 
 MemberMap.drawBackgroundImg = function(ctx, img_path, callback, dw, dh){
@@ -150,32 +69,27 @@ MemberMap.drawBackgroundImg = function(ctx, img_path, callback, dw, dh){
 }
 
 MemberMap.draw = function(id, canvas_width, canvas_height){
-    var cnvs = document.getElementById(id);
-    var ctx = cnvs.getContext("2d");
+    console.log(id);
+	var canvas = document.getElementById(id);
+    console.log(canvas);
+    var ctx = canvas.getContext('2d');
     ctx.beginPath();
-    ctx.fillStyle = this.defaultFillColor;
+    //ctx.fillStyle = this.defaultFillColor;
 
     if( arguments.length >= 3 ){
     	ctx.clearRect(0, 0, canvas_width, canvas_height);
     }
 
-    if( this.backgroundImg != null ){
-    	if( arguments.length >= 3 ){
-	    	this.drawBackgroundImg(ctx, this.backgroundImg, function(){
-	    		MemberMap.drawMemberList(ctx);
-	    	}, canvas_width, canvas_height);
-    	}else{
-	    	this.drawBackgroundImg(ctx, this.backgroundImg, function(){
-	    		MemberMap.drawMemberList(ctx);
-	    	});
-    	}
-    }else{
-    	this.drawMemberList(ctx);
-    }
-}
+    mp = this;
+    var points = this.points;
+    this.drawBackgroundImg(ctx, this.backgroundImg, function(){
+    	for(var i=0; i<points.length; i++){
+    		var pt = points[i];
+    		var apt = mp.calcAbstractPoint(pt.x, pt.y);
+    		mp.drawPoint(ctx, apt.x, apt.y, 10);
+    		mp.drawName(ctx, apt.x-7, apt.y-10, pt.name);
+        }
+    });
 
-MemberMap.drawMemberList = function(ctx){
-	for(var i=0; i<this.members.length; i++){
-		this.drawMember(ctx, i);
-	}
+
 }

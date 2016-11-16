@@ -1,34 +1,23 @@
-<html lang="ja">
+<html>
   <head>
-    <script type="text/javascript" src="dwr/engine.js"></script>
-    <script type="text/javascript" src="dwr/util.js"></script>
-    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="js/jquery.serialize.js"></script>
-    <script type="text/javascript">src="js/script.js"</script>
-    <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script>
+    <title>Canvas tutorial template</title>
     <script type="text/javascript">
-      function update(){
-        var formData = $('#csprinter_form').serializeJson();
-        MultiplePrinter.execute(formData, {
-          callback: function(data) {
-            $('#csprinterReply').text(data);
-            $('#error_message').text("");
-          },
-          errorHandler: updateErrorMessage
-        });
-      }
-      function updateErrorMessage(message, exception){
-        $('#error_message').text(message);
-        $('#csprinterReply').text("");
-      }
+    function draw(){
+        var canvas = document.getElementById('tutorial');
+        if (canvas.getContext){
+            var ctx = canvas.getContext('2d');
+            //円弧4
+            ctx.beginPath();
+            ctx.arc(200,150,10,0,Math.PI*2.0,true);
+            ctx.fill();
+        }
+    }
     </script>
+    <style type="text/css">
+      canvas { border: 1px solid #999; }
+    </style>
   </head>
-  <body>
-    <p>
-       <input value="Send" type="button" onclick="update()"/>
-      Reply: <span id="csprinterReply"></span>
-    </p><p>
-      <span id="error_message" class="error"></span>
-    </p>
+  <body onload="draw();">
+    <canvas id="tutorial" width="400" height="300"></canvas>
   </body>
 </html>

@@ -3,28 +3,35 @@
 <head>
 	<meta charset="utf-8">
 	<title>ゼミ室マップ2016</title>
-	<script type="text/javascript">
-	onload = function(){
-			draw();
-	}
+	<script type="text/javascript" src="dwr/engine.js"></script>
+    <script type="text/javascript" src="dwr/util.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.serialize.js"></script>
+    <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script>
+    <script type="text/javascript" src="js/MemberMap.js"></script>
 
-	  function draw(){
-	  	var canvas = document.getElementById('zemi2016');
-	  	if ( ! canvas || ! canvas.getContext) { return false;}
-			var ctx = canvas.getContext('2d');
-			var img = new Image();
-			img.src = "ゼミ室マップ2016.png?" + new Date().getTime();
-			img.onload = function() {
-				ctx.drawImage(img, 0, 0);
-			}
-	  }
-	 </script>
 	 <style type="text/css">
 	 	canvas {border: 1px solid #999; }
 	 </style>
 </head>
 
 <body>
+
+	<div id="content">
+	<h1 class="cen">ゼミ在室管理システム</h1>
+	<div id="map" class="page_centering">
 	<canvas id="zemi2016" width="870" height="1220"></canvas>
+	</div>
+
+	<script type="text/javascript">
+
+	  MemberMap.backgroundImg = "ゼミ室マップ2016.png";
+
+	  MemberMap.addPoint(1.0, -0.5, "102");
+
+	  MemberMap.draw("zemi2016",870,1220);
+	 </script>
+ 	<a  href="http://www.jra.go.jp/">jraに戻る</a>
+</div>
 </body>
 </html>
