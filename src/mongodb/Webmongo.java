@@ -17,6 +17,7 @@ public class Webmongo {
 
 		Calendar cal1 = Calendar.getInstance();
 		cal1.add(Calendar.SECOND, -60);
+		coll1.setDeadline(cal1.getTime());
 		System.out.println("border time: " + cal1.getTime().toString());
 
 		//認識されたビーコンの一覧を取得
