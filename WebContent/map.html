@@ -25,11 +25,16 @@
 
 	<script type="text/javascript">
 
-	  MemberMap.backgroundImg = "ゼミ室マップ2016.png";
+	MultiplePrinter.execute(function(data){
+		  console.log(data);
 
-	  MemberMap.addPoint(1.0, -0.5, "102");
+		  MemberMap.backgroundImg = "zemimap2016.png";
+		  for(var i=0;i<data.length;i++){
+		  	MemberMap.addPoint(data[i].x, data[i].y, data[i].minor);
+		  }
+		  MemberMap.draw("zemi2016",870,1220);
+	});
 
-	  MemberMap.draw("zemi2016",870,1220);
 	 </script>
  	<a  href="http://www.jra.go.jp/">jraに戻る</a>
 </div>
