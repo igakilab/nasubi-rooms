@@ -47,7 +47,7 @@ MemberMap.calcAbstractPoint = function(x0, y0){
 	var ax = x0 * 120;
 	var ay = y0 * 120;
 	ax = ax + this.originX;
-	ay = ay + this.originY;
+	ay = ay + this.originY + 50;
 
 	return {x: ax, y: ay};
 }
