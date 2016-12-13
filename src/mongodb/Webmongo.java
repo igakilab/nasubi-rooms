@@ -61,7 +61,7 @@ public class Webmongo {
 			    //beacon1mに平均距離の配列を登録する
 			    	coll2.insertOne(new Document("receiver", receivers.get(j))
 			    		.append("minor", beacons.get(i))
-			    		.append("平均距離",tmp)
+			    		.append("avedist",tmp)
 			    		.append("date",cal2.getTime()));
 				}
 
@@ -73,9 +73,9 @@ public class Webmongo {
 			//ドキュメントを初期化する
 				Document doc1 = new Document();
 			//ドキュメントに値を設定する
-				doc1.append("minor", beacons.get(0))
-					.append("x座標", p1.x)
-					.append("y座標", p1.y)
+				doc1.append("minor", minor)
+					.append("x", p1.x)
+					.append("y", p1.y)
 					.append("date", cal2.getTime());
 			//データベースに登録する
 			coll4.insertOne(doc1);

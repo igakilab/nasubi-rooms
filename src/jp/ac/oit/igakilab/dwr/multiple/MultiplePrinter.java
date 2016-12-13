@@ -93,8 +93,8 @@ public class MultiplePrinter {
 		//変換
 		BeaconPos pos = new BeaconPos();
 		pos.setDate(doc.getDate("date"));
-		pos.setX(doc.getDouble("x座標"));
-		pos.setY(doc.getDouble("y座標"));
+		pos.setX(doc.getDouble("x"));
+		pos.setY(doc.getDouble("y"));
 
 		client.close();
 		return pos;
