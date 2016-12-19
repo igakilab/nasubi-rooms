@@ -40,7 +40,7 @@ public class Webmongo {
 			if(receivers.size() >= 3){
 				System.out.println(minor + ": " + receivers.toString());
 				double tmp;
-				RCircle[] c = new RCircle[3];
+				RCircle[] c = new RCircle[9];
 
 				for(int j=0; j<receivers.size(); j++){
 					c[j] = new RCircle();
