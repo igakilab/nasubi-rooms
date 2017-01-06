@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>井垣らぼチーム結成</title>
+	<!-- <script type="text/javascript" src="dwr/engine.js"></script>
+	<script type="text/javascript" src="dwr/util.js"></script> -->
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.serialize.js"></script>
+    <script type="text/javascript" src="js/flotr2.min.js"></script>
+    <!-- <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script> -->
+    <script type="text/javascript" src="js/MemberMap.js"></script>
+
+</head>
+
+<body>
+	<div id="editor-render-0" style="width:900px;height:600px;"></div>
+
+	<script>
+	(function basic_timeline(container) {
+
+		  var
+		  	//			x,y,長さ
+		    d1        = [[1, 0, 9]],
+		    d2        = [[2.2, 1, 4]],
+		    d3        = [[1.9, 2, 2], [20, 2, 3.3]],
+		    d4        = [[1.55, 3, 9]],
+		    d5        = [[5, 4, 2.3]],
+		    d6		  = [[13, 5, 9]],
+		    d7		  = [[10, 6, 4],[17, 6, 5]],
+		    data      = [],
+		    timeline  = { show : true, barWidth : .5 }, //barWidth:バーの太さ
+		    markers   = [],
+		    labels    = ['日', '土', '金', '木', '水', '火', '月'],
+		    i, graph, point;
+
+		  // Timeline
+		  Flotr._.each([d1, d2, d3, d4, d5], function (d) {
+		    data.push({
+		      data : d,
+		      timeline : Flotr._.clone(timeline)
+		    });
+		  });
+
+		  // Markers
+		  Flotr._.each([d1, d2, d3, d4, d5], function (d) {
+		    point = d[0];
+		    markers.push([point[0], point[1]]);
+		  });
+
+		  // Draw Graph
+		  graph = Flotr.draw(container, data, {
+		    xaxis: {
+		      noTicks: 24,
+		      tickFormatter: function (x) {
+		        var
+		          x = parseInt(x),
+		          hour = ['0時', '1時', '2時', '3時', '4時', '5時', '6時', '7時', '8時', '9時', '10時', '11時',
+		                 '12時', '13時', '14時', '15時', '16時', '17時', '18時', '19時', '20時', '21時', '22時', '23時'];
+		        return hour[(x-1)%24]
+		      }
+		    },
+		    yaxis: {
+		    	tickFormatter : function (y) {
+		    	  var
+		    	   y = parseInt(y);
+		    	  return labels[(y)%7]
+		      }
+		    },
+		    grid: {
+		      horizontalLines : false
+		    }
+		  });
+		})(document.getElementById("editor-render-0"));
+	</script>
+</body>

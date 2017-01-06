@@ -7,7 +7,6 @@ import org.bson.Document;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 
 public class Webmongo {
 	public static void main(String[] args){
@@ -27,61 +26,46 @@ public class Webmongo {
 		//mongoDBのreceiverからデータを取得する
 		MongoCollection<Document> coll3 = client.getDatabase("myproject-room").getCollection("receivers");
 		//mongoDBのbeacon1mからデータを取得する
-		MongoCollection<Document> coll2 = client.getDatabase("myproject-room").getCollection("beacons1m");
+		MongoCollection<Document> coll4 = client.getDatabase("myproject-room").getCollection("beacons1m");
 		//mongoDBのbeacon1mzからデータを取得する
-
-		MongoCollection<Document> coll4 = client.getDatabase("myproject-room").getCollection("beacons1mz");
+		MongoCollection<Document> coll5 = client.getDatabase("myproject-room").getCollection("beacons1mz");
 
 		for(int i=0; i<beacons.size(); i++){
 			int minor = beacons.get(i);
 
-			//そのビーコンが認識されている受信機のリスト
-			List<String> receivers = coll1.getBeaconReceiverList(minor);
-			if(receivers.size() >= 3){
-				System.out.println(minor + ": " + receivers.toString());
-				double tmp;
-				RCircle[] c = new RCircle[9];
+			//レシーバーとビーコンの平均距離を求める
+			RReceiver c[] = CalcAve.posit(minor, coll1, coll3);
 
-				for(int j=0; j<receivers.size(); j++){
-					c[j] = new RCircle();
-					Document doc = coll3.find(Filters.eq("name", receivers.get(j))).first();
-				//x座標を取得する
-					double x = doc.getDouble("x");
-				//y座標を取得する
-					double y = doc.getDouble("y");
-				//x座標をセット
-					c[j].x = x;
-				//y座標をセット
-			    	c[j].y = y;
-			    //平均距離をセットする
-			    	c[j].r = coll1.getDistanceAverage(minor, receivers.get(j));
-			    	tmp = c[j].r;
-			    	System.out.println(c[j].toString());
-
-			    //beacon1mに平均距離の配列を登録する
-			    	coll2.insertOne(new Document("receiver", receivers.get(j))
-			    		.append("minor", beacons.get(i))
-			    		.append("avedist",tmp)
-			    		.append("date",cal2.getTime()));
-				}
-
-			//座標計算をする
-				RPoint p1 = ZahyoMongo.getPosition(c[0],c[1],c[2]);
-					System.out.println(p1.toString());
-
-			/*mongoDBにぶちこむための準備*/
+			//それぞれの平均距離をデータベースに入れる
+			for(int j=0; j<c.length; j++){
 			//ドキュメントを初期化する
 				Document doc1 = new Document();
+
 			//ドキュメントに値を設定する
 				doc1.append("minor", minor)
+					.append("receiver",c[j].name)
+					.append("avedist", c[j].r)
+					.append("date", cal2.getTime());
+			//データベースに登録する
+				coll4.insertOne(doc1);
+			}
+
+			//ビーコンの座標を求める
+			RPoint p1 = CalcAve.posiz(c);
+			System.out.println("結果(" + minor + ") " + p1);
+
+			if( p1 != null ){
+				//座標をデータベースに入れる
+				//ドキュメントを初期化する
+				Document doc2 = new Document();
+
+				//ドキュメントに値を設定する
+				doc2.append("minor", minor)
 					.append("x", p1.x)
 					.append("y", p1.y)
 					.append("date", cal2.getTime());
-			//データベースに登録する
-			coll4.insertOne(doc1);
-
-
-
+				//データベースに登録する
+				coll5.insertOne(doc2);
 			}
 		}
 		client.close();

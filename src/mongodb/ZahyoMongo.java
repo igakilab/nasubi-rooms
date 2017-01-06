@@ -28,5 +28,16 @@ public class ZahyoMongo {
 		return p1;
 	}
 
-}
+	public static boolean isCircum (RCircle c1, RCircle c2){
+		return (Math.abs(c1.r - c2.r) < c1.distance(c2) && c1.distance(c2)<= c1.r+ c2.r);
+	}
 
+	public static boolean isCircum (RCircle c1, RCircle c2, RCircle c3){
+		return isCircum(c1,c2) && isCircum(c2,c3) && isCircum(c3,c1);
+	}
+
+	public static boolean inroom (RPoint p1){
+		return p1.x >= 0 && p1.x <=8.0 &&
+				p1.y >=-2.0 && p1.y <= 10.0;
+	}
+}
