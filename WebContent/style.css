@@ -1,0 +1,70 @@
+body{
+	background-color:#eeeeee;
+}
+
+table{
+	background-color:#ffffff;
+}
+
+/*ヘッダー*/
+div#header{
+	height:90px;
+	background-color:#ffff99;
+}
+
+h1 {
+	padding:30px 0px 0px 20px;
+	font-family:Arial, Helventica, sans-serif;
+}
+
+h3 {
+	padding:30px 0px 0px 20px;
+	font-family:Arial, Helventica, sans-serif;
+}
+
+/*メインメニュ*/
+ul#menu{
+	height:0px; font-weight:bold;
+	margin-top:0px;
+}
+li#menu01,li#menu02,li#menu03,li#menu04,li#menu05 {
+	float:left;
+	display:inline;
+	list-style-type:none;
+	background-repeat:no-repeart;
+}
+
+li#menu01{
+	width:155px;height:40px;
+	background-image:url("bg_menu02.jpg");
+}
+li#menu02{
+	width:155px;height:40px;
+	background-image:url("bg_menu03.jpg");
+}
+li#menu03{
+	width:155px;height:40px;
+	background-image:url("bg_menu04.jpg");
+}
+li#menu04{
+	width:160px;height:45px;
+	background-image:url("bg_menu01.jpg");
+}
+li#menu05{
+	width:160px;height:45px;
+	background-image:url("bg_menu05.jpg");
+}
+
+ul#menu a{
+		display:block;
+		height:45px; padding-top:10px; text-align:center;
+		text-decoration:none;
+		font-family:Arial, Helventica, sans-serif;
+}
+
+/*メイン画面*/
+div#main{
+	margin:40px 0px 0px 0px;
+	style="width:900px;height:600px;
+
+}

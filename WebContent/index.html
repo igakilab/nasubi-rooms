@@ -1,86 +1,88 @@
-<!DOCTYPE html>
-<html lang="ja">
-
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
-  <meta charset="utf-8">
-  <title>蜀�繧ｰ繝ｩ繝�</title>
-  <meta name="description" content="">
-  <style>
-    body {
-      background-color: #fafafa;
-    }
-    canvas {
-      display: block;
-      border: 1px solid #333;
-      background-color: #eee;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  </style>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+<link rel="stylesheet" type="text/css" href="sample.css" />
+<title>CSS learning</title>
 </head>
-
 <body>
-  <canvas id="canvas1" width="300" height="300">
-  </canvas>
+<div id="pagebody">
 
-  <script type="text/javascript">
-  (function basic_timeline(container) {
+	<!-- ヘッダ -->
+	<div id="header"><h1><a href="index.html">CSS learning</a></h1></div>
 
-	  var
-	    d1        = [[1, 4, 5]],
-	    d2        = [[3.2, 3, 4]],
-	    d3        = [[1.9, 2, 2], [5, 2, 3.3]],
-	    d4        = [[1.55, 1, 9]],
-	    d5        = [[5, 0, 2.3]],
-	    data      = [],
-	    timeline  = { show : true, barWidth : .5 },
-	    markers   = [],
-	    labels    = ['Obama', 'Bush', 'Clinton', 'Palin', 'McCain'],
-	    i, graph, point;
+	<!-- メインメニュー -->
+	<ul id="menu">
+		<li id="menu01"><a href="xxx.html">Home</a></li>
+		<li id="menu02"><a href="xxx.html">Overview</a></li>
+		<li id="menu03"><a href="xxx.html">Property</a></li>
+		<li id="menu04"><a href="xxx.html">Tips</a></li>
+		<li id="menu05"><a href="xxx.html">Contact</a></li>
+	</ul>
 
-	  // Timeline
-	  Flotr._.each([d1, d2, d3, d4, d5], function (d) {
-	    data.push({
-	      data : d,
-	      timeline : Flotr._.clone(timeline)
-	    });
-	  });
+	<!-- サブメニュー（左カラム） -->
+	<div id="submenu">
+		<div id="submenu_header">目的で探す</div>
+		<ul id="submenu_body">
+			<li><a href="xxx.html">CSSの適用</a></li>
+			<li><a href="xxx.html">セレクタ</a></li>
+			<li><a href="xxx.html">フォント</a></li>
+			<li><a href="xxx.html">テキスト</a></li>
+			<li><a href="xxx.html">文字色・背景</a></li>
+			<li><a href="xxx.html">幅・高さ・余白</a></li>
+			<li><a href="xxx.html">ボーダー</a></li>
+			<li><a href="xxx.html">表示・配置</a></li>
+			<li><a href="xxx.html">リスト</a></li>
+			<li><a href="xxx.html">テーブル</a></li>
+			<li><a href="xxx.html">生成内容の挿入</a></li>
+			<li><a href="xxx.html">インターフェース</a></li>
+			<li><a href="xxx.html">フィルタ・ズーム</a></li>
+			<li><a href="xxx.html">テキスト（IE独自）</a></li>
+			<li><a href="xxx.html">印刷</a></li>
+			<li><a href="xxx.html">音声</a></li>
+		</ul>
+	</div>
 
-	  // Markers
-	  Flotr._.each([d1, d2, d3, d4, d5], function (d) {
-	    point = d[0];
-	    markers.push([point[0], point[1]]);
-	  });
-	  data.push({
-	    data: markers,
-	    markers: {
-	      show: true,
-	      position: 'rm',
-	      fontSize: 11,
-	      labelFormatter : function (o) { return labels[o.index]; }
-	    }
-	  });
+	<!-- コンテンツ（中央と右の2カラム） -->
+	<div id="content">
+		<!-- ニュース（中央カラム） -->
+		<div id="news">
+			<h2>ニュース</h2>
+			<h3>かえるさんのサイトがオープン！！</h3>
+			<p>
+			けろけろ、けろけろ、けろけーろ。（中略）・・と、それはもう大変な喜びようだとか。
+			</p>
+			<p><img src="images/ss01.gif" alt="かえるサイトの画面" width="200" height="155" /></p>
+			<hr />
+		</div>
+		<!-- ピックアップ（右カラム） -->
+		<div id="pickup">
+			<h2>ピックアップ</h2>
+			<ul>
+				<li><a href="xxx.html">CSSのメリット</a></li>
+				<li><a href="xxx.html">Web標準とは</a></li>
+				<li><a href="xxx.html">CSSのバージョン</a></li>
+				<li><a href="xxx.html">HTML/XHTMLの基礎</a></li>
+				<li><a href="xxx.html">CSSの書き方</a></li>
+				<li><a href="xxx.html">文書に適用する</a></li>
+				<li><a href="xxx.html">代替スタイルシート</a></li>
+				<li><a href="xxx.html">メディアタイプ</a></li>
+				<li><a href="xxx.html">セレクタの種類</a></li>
+				<li><a href="xxx.html">@ルール</a></li>
+				<li><a href="xxx.html">スタイルの優先順位</a></li>
+				<li><a href="xxx.html">スタイルの継承</a></li>
+				<li><a href="xxx.html">CSSでの長さの指定</a></li>
+				<li><a href="xxx.html">ボックス</a></li>
+				<li><a href="xxx.html">DOCTYPE宣言</a></li>
+			</ul>
+		</div>
+	</div>
 
-	  // Draw Graph
-	  graph = Flotr.draw(container, data, {
-	    xaxis: {
-	      noTicks: 3,
-	      tickFormatter: function (x) {
-	        var
-	          x = parseInt(x),
-	          months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	        return months[(x-1)%12];
-	      }
-	    },
-	    yaxis: {
-	      showLabels : false
-	    },
-	    grid: {
-	      horizontalLines : false
-	    }
-	  });
-	})(document.getElementById("editor-render-0"));
-  </script>
+	<!-- フッタ -->
+	<div id="footer"><address>Copyright (c) HTMQ All Rights Reserved.</address></div>
+
+</div>
 </body>
-
 </html>

@@ -10,11 +10,17 @@
     <script type="text/javascript" src="js/flotr2.min.js"></script>
     <!-- <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script> -->
     <script type="text/javascript" src="js/MemberMap.js"></script>
-
+	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-
 <body>
-	<div id="editor-render-0" style="width:900px;height:600px;"></div>
+	<div id="header"><h1>チーム詳細</h1></div>
+	<ul id="menu">
+		<li id="menu01"><a href="TeamRank.html">トップ</a></li>
+		<li id="menu02"><a href="TeamNow.html">現状</a></li>
+		<li id="menu03"><a href="TeamTask.html">チームタスク</a></li>
+	</ul>
+	<h3>1週間のチーム活動時間</h3>
+	<div id="editor-render-0" style="width:900px;height:600px;background-color:#ffffff;"></div>
 
 	<script>
 	(function basic_timeline(container) {
@@ -35,21 +41,16 @@
 		    i, graph, point;
 
 		  // Timeline
-		  Flotr._.each([d1, d2, d3, d4, d5], function (d) {
+		  Flotr._.each([d1, d2, d3, d4, d5, d6, d7], function (d) {
 		    data.push({
 		      data : d,
 		      timeline : Flotr._.clone(timeline)
 		    });
 		  });
 
-		  // Markers
-		  Flotr._.each([d1, d2, d3, d4, d5], function (d) {
-		    point = d[0];
-		    markers.push([point[0], point[1]]);
-		  });
-
 		  // Draw Graph
 		  graph = Flotr.draw(container, data, {
+			ieBackgroundColor:"#ffffff",
 		    xaxis: {
 		      noTicks: 24,
 		      tickFormatter: function (x) {

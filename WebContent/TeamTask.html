@@ -9,14 +9,21 @@
     <script type="text/javascript" src="js/jquery.serialize.js"></script>
     <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script>
     <script type="text/javascript" src="js/MemberMap.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
 <body>
-	<div id="content">
+	<div id="header">
 	<h1>１週間のチーム目標設定</h1>
+	<ul id="menu">
+		<li id="menu01"><a href="TeamRank.html">トップ</a></li>
+		<li id="menu02"><a href="TeamNow.html?team=1">現状</a></li>
+		<li id="menu03"><a href="TeamTask.html">チームタスク</a></li>
+	</ul>
 	</div>
+	<div id="main">
 	<form>
-	<table>
+	<table style="background-color:#eeeeee">
 		<tr><td>
 			<p>目標時間：
 			<select name="horoscope">
@@ -50,5 +57,6 @@
 		</tr>
 	</table>
 	</form>
+	</div>
 </body>
 </html>
