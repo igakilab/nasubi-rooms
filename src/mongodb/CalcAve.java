@@ -68,7 +68,7 @@ public class CalcAve {
 								System.out.println(c[j].r + c[k].r + c[l].r);
 								p.add(p1);
 							}else{
-								//System.out.format("%d-%d-%d は部屋の範囲外です\n", j, k, l);
+							//System.out.format("%d-%d-%d は部屋の範囲外です\n", j, k, l);
 							}
 							//System.out.format("%d-%d-%d は外接円の条件に反します\n", j, k, l);
 					}

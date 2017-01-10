@@ -1,5 +1,6 @@
 package mongodb;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -10,7 +11,8 @@ import com.mongodb.client.MongoCollection;
 
 public class Webmongo {
 	public static void main(String[] args){
-		MongoClient client = new MongoClient("mongodb-server");
+		//MongoClient client = new MongoClient("mongodb-server");
+		MongoClient client = new MongoClient("150.89.234.253");
 		//MongoCollection<Document> coll1 = client.getDatabase("myproject-room").getCollection("beacons");
 		BeaconAggregator coll1 = new BeaconAggregator(client);
 
@@ -29,6 +31,8 @@ public class Webmongo {
 		MongoCollection<Document> coll4 = client.getDatabase("myproject-room").getCollection("beacons1m");
 		//mongoDBのbeacon1mzからデータを取得する
 		MongoCollection<Document> coll5 = client.getDatabase("myproject-room").getCollection("beacons1mz");
+
+		ArrayList<RBeacon> pj = new ArrayList<RBeacon>();
 
 		for(int i=0; i<beacons.size(); i++){
 			int minor = beacons.get(i);
@@ -66,8 +70,18 @@ public class Webmongo {
 					.append("date", cal2.getTime());
 				//データベースに登録する
 				coll5.insertOne(doc2);
+
+				RBeacon bcon = new RBeacon();
+				bcon.minor = minor;
+				bcon.x = p1.x;
+				bcon.y = p1.y;
+				pj.add(bcon);
 			}
 		}
+
+		Judge.getNearBeacons(client.getDatabase("myproject-room"), pj);
+
+
 		client.close();
 	}
 }
