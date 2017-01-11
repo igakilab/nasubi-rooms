@@ -11,8 +11,8 @@ import com.mongodb.client.MongoCollection;
 
 public class Webmongo {
 	public static void main(String[] args){
-		//MongoClient client = new MongoClient("mongodb-server");
-		MongoClient client = new MongoClient("150.89.234.253");
+		MongoClient client = new MongoClient("mongodb-server");
+		//MongoClient client = new MongoClient("150.89.234.253");
 		//MongoCollection<Document> coll1 = client.getDatabase("myproject-room").getCollection("beacons");
 		BeaconAggregator coll1 = new BeaconAggregator(client);
 

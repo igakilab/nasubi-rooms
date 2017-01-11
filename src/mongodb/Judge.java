@@ -53,18 +53,20 @@ public class Judge {
 
 			//ビーコンの位置からメンバーで活動しているか判定する
 			boolean flag1 = false;
-			for(int i=0; i<beacons.size(); i++){
-				boolean flag2 = true;
-				for(int j=i;j<beacons.size();j++){
-					if(i!=j){
-						if(beacons.get(i).distance(beacons.get(j))<1.5){
-							flag2 =false;
+			if(beacons.size()>1){
+				for(int i=0; i<beacons.size(); i++){
+					boolean flag2 = true;
+					for(int j=0;j<beacons.size();j++){
+						if(i!=j){
+							if(beacons.get(i).distance(beacons.get(j))>3.3){
+								flag2 =false;
+							}
 						}
 					}
-				}
-				if( flag2 ){
-					flag1 = true;
-					break;
+					if( flag2 ){
+						flag1 = true;
+						break;
+					}
 				}
 			}
 
