@@ -40,6 +40,8 @@ public class Webmongo {
 			//レシーバーとビーコンの平均距離を求める
 			RReceiver c[] = CalcAve.posit(minor, coll1, coll3);
 
+			boolean flag=true;
+
 			//それぞれの平均距離をデータベースに入れる
 			for(int j=0; j<c.length; j++){
 			//ドキュメントを初期化する
@@ -52,35 +54,40 @@ public class Webmongo {
 					.append("date", cal2.getTime());
 			//データベースに登録する
 				coll4.insertOne(doc1);
+			//５号機まわりにビーコンがあるか判定
+				if(c[j].name.equals("5号機")&&c[j].r<=0.3){
+					flag=false;
+				}
 			}
 
-			//ビーコンの座標を求める
-			RPoint p1 = CalcAve.posiz(c);
-			System.out.println("結果(" + minor + ") " + p1);
+			if( flag ){
+				//ビーコンの座標を求める
+				RPoint p1 = CalcAve.posiz(c);
+				System.out.println("結果(" + minor + ") " + p1);
 
-			if( p1 != null ){
-				//座標をデータベースに入れる
-				//ドキュメントを初期化する
-				Document doc2 = new Document();
+				if( p1 != null ){
+					//座標をデータベースに入れる
+					//ドキュメントを初期化する
+					Document doc2 = new Document();
 
-				//ドキュメントに値を設定する
-				doc2.append("minor", minor)
-					.append("x", p1.x)
-					.append("y", p1.y)
-					.append("date", cal2.getTime());
-				//データベースに登録する
-				coll5.insertOne(doc2);
+					//ドキュメントに値を設定する
+					doc2.append("minor", minor)
+						.append("x", p1.x)
+						.append("y", p1.y)
+						.append("date", cal2.getTime());
+					//データベースに登録する
+					coll5.insertOne(doc2);
 
-				RBeacon bcon = new RBeacon();
-				bcon.minor = minor;
-				bcon.x = p1.x;
-				bcon.y = p1.y;
-				pj.add(bcon);
+					RBeacon bcon = new RBeacon();
+					bcon.minor = minor;
+					bcon.x = p1.x;
+					bcon.y = p1.y;
+					pj.add(bcon);
+				}
 			}
 		}
 
 		Judge.getNearBeacons(client.getDatabase("myproject-room"), pj);
-
 
 		client.close();
 	}
