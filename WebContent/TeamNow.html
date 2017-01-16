@@ -7,8 +7,33 @@
 	<script type="text/javascript" src="dwr/util.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/jquery.serialize.js"></script>
-    <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script>
+    <script type="text/javascript" src="dwr/interface/Feedback.js"></script>
     <script type="text/javascript" src="js/MemberMap.js"></script>
+
+    <script>
+    function getUrlParameter(){
+    	var arg = new Object;
+    	var pair=location.search.substring(1).split('&');
+    	for(var i=0;pair[i];i++) {
+    	    var kv = pair[i].split('=');
+    	    arg[kv[0]]=kv[1];
+    	}
+    	return arg;
+    }
+
+    $(document).ready(function(){
+    	var team = getUrlParameter().team;
+
+    	Feedback.teamNow(team, function(data){
+    		$(".data-level").text(data.level);
+    		$(".data-member1").text(data.member1);
+    		$(".data-member2").text(data.member2);
+    		$(".data-member3").text(data.member3);
+    		$(".data-exp").text(data.exp);
+    	});
+    });
+    </script>
+
     <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
@@ -31,11 +56,11 @@
 		<th>経験値</th>
 	</tr>
 	<tr>
-		<td></td>
-		<td>きたば</td>
-		<td>りょーくん</td>
-		<td></td>
-		<td>300</td>
+		<td class="data-level"></td>
+		<td class="data-member1"></td>
+		<td class="data-member2"></td>
+		<td class="data-member3"></td>
+		<td class="data-exp"></td>
 	</tr>
 </table>
 

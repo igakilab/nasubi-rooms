@@ -7,9 +7,32 @@
 	<script type="text/javascript" src="dwr/util.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/jquery.serialize.js"></script>
-    <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script>
+    <script type="text/javascript" src="dwr/interface/Feedback.js"></script>
     <script type="text/javascript" src="js/MemberMap.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <script>
+    $(document).ready(function(){
+    	Feedback.teamRank(function(data){
+    		for(var i=0;i<data.length;i++){
+    			var $tr = $("<tr></tr>"); //列の要素を作る
+				var $td1 = $("<td></td>").text(i+1)
+					.attr("bgcolor", "#99FF33");//ランクの順位
+				$tr.append($td1); //列に追加
+    			var $td2 = $("<td></td>"); //名前のセルを作る
+    			var $a = $("<a></a>").attr("href", "TeamNow.html?team="+data[i].partyName)
+    				.text(data[i].partyName);//各チームのリンク
+    			$td2.append($a);//
+    			$tr.append($td2); //列に追加
+    			var $td3 = $("<td></td>").text(data[i].level); //レベルのセルを作る
+    			$tr.append($td3); //列に追加
+
+    			$(".data-ranking").append($tr); //表に列を追加
+    		}
+    	});
+    });
+    </script>
+
 </head>
 
 <body>
@@ -21,13 +44,13 @@
 	</ul>
 	</div>
 	<div id="main">
-	<table border="1" width="20%">
+	<table border="1" width="20%" class="data-ranking">
 		<tr>
 			<th bgcolor="#FFFF33">No</th>
 			<th bgcolor="#FFFF33" width="200">チーム</th>
 			<th bgcolor="#FFFF33" width="100">LEVEL</th>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td bgcolor="#99FF33" align="center">1</td>
 			<td align="center"><a href="TeamNow.html?team=1">もじゃ</a></td>
 			<td>Lev.5</td>
@@ -61,7 +84,7 @@
 			<td bgcolor="#99FF33" align="center">7</td>
 			<td align="center"><a href="TeamNow.html?team=7">もじゃ</a></td>
 			<td></td>
-		</tr>
+		</tr> -->
 	</table>
 	</div>
 </body>

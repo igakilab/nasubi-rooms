@@ -48,7 +48,7 @@ public class BeaconAggregator {
 			double dist = aggr.getDistanceAverage(101, "1号機");
 			System.out.println("101 - 1号機: " + dist);
 		}
-		
+
 		aggr.getBeaconPositions(101).forEach((p) ->
 			System.out.println(p.toString()));
 
@@ -187,7 +187,7 @@ public class BeaconAggregator {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * ビーコンの座標の一覧を取得します
 	 * @param beaconId 対象のビーコンIDです
@@ -196,16 +196,24 @@ public class BeaconAggregator {
 	public List<RPoint> getBeaconPositions(int beaconId){
 		//クエリーの作成
 		Bson filter = createFilter(beaconId, null, null);
-		
+
 		//結果の取得
 		FindIterable<Document> result = collection.find(filter);
 		List<RPoint> positions = new ArrayList<RPoint>();
-		
+
 		//変換
 		for(Document doc : result){
 			positions.add(new RPoint(doc.getDouble("x"), doc.getDouble("y")));
 		}
-		
+
 		return positions;
+	}
+
+
+	/**
+	 * コレクションの中身をすべて削除します
+	 */
+	public void refresh(){
+		collection.deleteMany(new Document());
 	}
 }

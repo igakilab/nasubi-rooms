@@ -39,7 +39,9 @@ public class CalcAve {
 			c[i].r = coll1.getDistanceAverage(minor, receivers.get(i));
 			//System.out.println(c[i].toString());
 		}
-
+		
+		
+		
 		return c;
 	}
 

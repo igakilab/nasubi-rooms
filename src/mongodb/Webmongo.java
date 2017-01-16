@@ -11,8 +11,8 @@ import com.mongodb.client.MongoCollection;
 
 public class Webmongo {
 	public static void main(String[] args){
-		MongoClient client = new MongoClient("mongodb-server");
-		//MongoClient client = new MongoClient("150.89.234.253");
+		//MongoClient client = new MongoClient("mongodb-server");
+		MongoClient client = new MongoClient("150.89.234.253");
 		//MongoCollection<Document> coll1 = client.getDatabase("myproject-room").getCollection("beacons");
 		BeaconAggregator coll1 = new BeaconAggregator(client);
 
@@ -55,7 +55,7 @@ public class Webmongo {
 			//データベースに登録する
 				coll4.insertOne(doc1);
 			//５号機まわりにビーコンがあるか判定
-				if(c[j].name.equals("5号機")&&c[j].r<=0.3){
+				if(c[j].name.equals("6号機")&&c[j].r<=0.3){
 					flag=false;
 				}
 			}
@@ -64,6 +64,7 @@ public class Webmongo {
 				//ビーコンの座標を求める
 				RPoint p1 = CalcAve.posiz(c);
 				System.out.println("結果(" + minor + ") " + p1);
+				System.out.println(" ");
 
 				if( p1 != null ){
 					//座標をデータベースに入れる
@@ -86,6 +87,8 @@ public class Webmongo {
 				}
 			}
 		}
+
+		coll1.refresh();
 
 		Judge.getNearBeacons(client.getDatabase("myproject-room"), pj);
 
