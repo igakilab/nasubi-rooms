@@ -2,6 +2,7 @@ package jp.ac.oit.igakilab.dwr.multiple;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import org.bson.Document;
@@ -85,5 +86,46 @@ public class Feedback {
 		}
 		client.close();
 		return ranking;
+	}
+
+	public TeamTaskForm teamTask(String partyName){
+		//ファームを作成
+		TeamTaskForm form = new TeamTaskForm();
+
+		//DBクライアント初期化
+		MongoClient client = createClient();
+		MongoDatabase db = client.getDatabase("myproject-room");
+		MongoCollection<Document> coll1 = db.getCollection("party");
+
+		//パーティー名取得
+		//Document partydata = coll1.find(Filters.eq("party", partyName)).first();
+		form.setPartyName(partyName);
+
+		client.close();
+		return form;
+	}
+
+	public void transemitTask(String team, int hour, String contain){
+		MongoClient client = createClient();
+		MongoDatabase db = client.getDatabase("myproject-room");
+		MongoCollection<Document> coll1 = db.getCollection("party");
+		MongoCollection<Document> coll2 = db.getCollection("taskcontain");
+
+		Calendar cal = Calendar.getInstance();
+
+		String[] split = contain.split("\n");
+		List<String> tasks = new ArrayList<String>();
+		for(String s : split){
+			if( s.trim().length() > 0 ){
+				tasks.add(s);
+			}
+		}
+
+		Document doc = new Document("team", team)
+					.append("date", cal.getTime())
+					.append("goaltime", hour)
+					.append("task", tasks);
+		coll2.insertOne(doc);
+
 	}
 }

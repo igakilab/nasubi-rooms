@@ -7,9 +7,38 @@
 	<script type="text/javascript" src="dwr/util.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/jquery.serialize.js"></script>
-    <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script>
+    <script type="text/javascript" src="dwr/interface/Feedback.js"></script>
     <script type="text/javascript" src="js/MemberMap.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <script>
+    function getUrlParameter(){
+    	var arg = new Object;
+    	var pair=location.search.substring(1).split('&');
+    	for(var i=0;pair[i];i++) {
+    	    var kv = pair[i].split('=');
+    	    arg[kv[0]]=kv[1];
+    	}
+    	return arg;
+    }
+
+    $(document).ready(function(){
+    	var team = getUrlParameter().team;
+
+    	Feedback.teamTask(team, function(data){
+    		$(".data-PartyName").text(data.partyName);
+    		//$(".data-goalTime").text(data.goalTime);
+    		//$(".data-TaskContain").text(data.TaskContain);
+    	});
+
+    	$("#transmitBtn").on("click", function(){
+    		var hour = $("#hourSelect").val();
+    		var contain = $("#containBox").val();
+
+    		Feedback.transemitTask(team, hour, contain);
+    	});
+    });
+    </script>
 </head>
 
 <body>
@@ -24,9 +53,14 @@
 	<div id="main">
 	<form>
 	<table style="background-color:#eeeeee">
-		<tr><td>
+		<br>
+		<tr>
+		<td>チーム名： <span class="data-PartyName"></span></td>
+		</tr>
+		<tr>
+		<td>
 			<p>目標時間：
-			<select name="horoscope">
+			<select id="hourSelect" name="goal">
 			<option value="6">6時間</option>
 			<option value="9">9時間</option>
 			<option value="12">12時間</option>
@@ -47,13 +81,14 @@
 			<option value="57">57時間</option>
 			<option value="60">60時間</option>
 			</select></p>
-		</td></tr>
+		</td>
+		</tr>
 		<tr>
 			<td>チームの目標設定を入力してください。<br>
-			<textarea name="task" rows="20" cols="80"
+			<textarea id="containBox" name="task" rows="20" cols="80"
 				placeholder="例&#13;&#10;&#13;&#10;1.早く寝る&#13;&#10;&#13;&#10;2.10時から作業を開始して18時に終わる"></textarea><br>
 		<tr>
-			<td align="right"><input type="submit" value="上記の内容で登録する"></td>
+			<td align="right"><input id="transmitBtn" type="button" name='action' value="上記の内容で登録する"></td>
 		</tr>
 	</table>
 	</form>

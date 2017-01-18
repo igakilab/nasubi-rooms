@@ -3,6 +3,7 @@ package jp.ac.oit.igakilab.dwr.multiple;
 public class TeamRankForm {
 	private String partyName;
 	private int level;
+
 	public String getPartyName() {
 		return partyName;
 	}
