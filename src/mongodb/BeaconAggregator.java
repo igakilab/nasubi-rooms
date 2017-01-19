@@ -51,6 +51,8 @@ public class BeaconAggregator {
 
 		aggr.getBeaconPositions(101).forEach((p) ->
 			System.out.println(p.toString()));
+		
+		aggr.refresh();
 
 		client.close();
 	}
