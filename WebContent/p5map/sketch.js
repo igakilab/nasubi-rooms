@@ -1,9 +1,7 @@
 var back;
-var photo1,photo2,photo3;
+var images;
+var characters = [];
 var canvas;
-var kitaba;
-var koike;
-var yamagida;
 var dest;
 var r1,r2,r3,r4,r5;
 var reply = "";
@@ -11,16 +9,36 @@ var tmp;
 var pt = null;
 
 function preload(){
+    images = {
+      "kitaba": loadImage("kitaba.png"),
+      "ryokun": loadImage("koike.png")
+    };
+
     back = loadImage("zemimap2016.png");
-    photo1 = loadImage("kitaba.png");
-    photo2 = loadImage("koike.png");
-    photo3 = loadImage("yamagida.png");
-    kitaba = new Character(photo1);
-    koike = new Character(photo2);
-    yamagida = new Character(photo3);
-    kitaba.set(500, 700);
-    koike.set(550,750);
-    yamagida.set(500,850);
+
+    console.log("load complete");
+}
+
+function reloadPosition(){
+	P5map.latestPosition(function(reply){
+		//console.log(reply);
+	  	characters = [];
+
+	  	for(var i=0; i<reply.length; i++){
+	  	  var pos = reply[i];
+	  	  var img = images[pos.memberName];
+	  	  var chara = new Character(img);
+
+	  	  var tmp = replacePx(pos.positions[0]);
+	  	  chara.set(tmp.x, tmp.y);
+
+	  	  if( pos.positions.length > 1 ){
+	  	    chara.setTarget(replacePx(pos.positions[1]));
+	  	  }
+
+	  	  characters.push(chara);
+  	}
+	});
 }
 
 function setup() {
@@ -28,53 +46,24 @@ function setup() {
   background(back);
   noStroke();
   rectbox();
-  var url = "http://localhost:3000/api/latest";
-	var request = new XMLHttpRequest();
-	request.open('GET', url);
-	request.onreadystatechange = function () {
-    if (request.readyState != 4) {
-  	      // リクエスト中
-   	    } else if (request.status != 200) {
-  	      // 失敗
-  	    } else {
-    	    // 取得成功
-    	    reply = JSON.parse(request.responseText);
-    	    for(var i=0;i<reply.length;i++){
-    	      tmp = reply[i];
-    	      console.log(tmp);
-    	      if(tmp.minor==101){
-    	        tmp = replacePx(tmp);
-              kitaba.setTarget(tmp);
-    	      }else if(tmp.minor==102){
-    	        tmp = replacePx(tmp);
-    	        koike.setTarget(tmp);
-    	      }else if(tmp.minor==103){
-    	        tmp = replacePx(tmp);
-    	        yamagida.setTarget(tmp);
-    	      }
-    	    }
-   	 }    
-	};
-request.send(null);
+
+  reloadPosition();
 }
 
 function draw() {
   background(back);
-  
+
   if( pt ){
     text("mouse (" + pt.x + ", " + pt.y + ")", 20, 50);
     text("mouse (" + pt.x + ", " + pt.y + ")", 20, 1000);
   }
-  
-  if(tmp){
-    text("(x" + tmp.x + ",y:" + tmp.y + ")", 20, 30);
-    kitaba.step(3);
-    koike.step(3);
-    yamagida.step(3);
-  }
-  kitaba.draw();
-  koike.draw();
-  yamagida.draw();
+
+    characters.forEach(function(c){
+      c.step(3);
+    });
+  characters.forEach(function(c){
+      c.draw();
+    });
 }
 
 function rectbox() {
@@ -92,6 +81,6 @@ function mouseMoved(){
 }
 
 function replacePx(a){
-  console.log("(x" + tmp.x + ",y:" + tmp.y + ")");
+	//console.log(a);
   return {x:a.x*110, y:a.y*110};
 }
