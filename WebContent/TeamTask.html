@@ -35,8 +35,14 @@
     		var hour = $("#hourSelect").val();
     		var contain = $("#containBox").val();
 
-    		Feedback.transemitTask(team, hour, contain);
+    		Feedback.transemitTask(team, hour, contain, function(){
+    			alert("登録できました");
+    			location.href = "TeamNow.html?team=" + team;
+    		});
     	});
+    	$(".to-teamtask").attr("href", "TeamTask.html?team=" + team);
+
+    	$(".to-teamnow").attr("href", "TeamNow.html?team=" + team);
     });
     </script>
 </head>
@@ -46,8 +52,8 @@
 	<h1>１週間のチーム目標設定</h1>
 	<ul id="menu">
 		<li id="menu01"><a href="TeamRank.html">トップ</a></li>
-		<li id="menu02"><a href="TeamNow.html?team=1">現状</a></li>
-		<li id="menu03"><a href="TeamTask.html">チームタスク</a></li>
+		<li id="menu02"><a class="to-teamnow" href="">現状</a></li>
+		<li id="menu03"><a class="to-teamtask" href="">チームタスク</a></li>
 	</ul>
 	</div>
 	<div id="main">

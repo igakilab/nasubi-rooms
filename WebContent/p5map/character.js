@@ -14,22 +14,22 @@ var Character = (function() {
     this.x = x;
     this.y = y;
   }
-  
+
   _class.prototype.move = function(dx, dy){
     this.x += dx;
     this.y += dy;
   }
-  
+
   _class.prototype.step = function(div) {
     this.route.step(div);
   }
-  
+
   _class.prototype.chase = function(target, div) {
     this.move(
       Math.min(Math.max((target.x - this.x), -div), div),
       Math.min(Math.max((target.y - this.y), -div), div));
   }
-  
+
   _class.prototype.setTarget = function(target) {
     console.log(this.rectContains(r1, this) ? "room1" : "room2");
     if( this.rectContains(r1,this) && this.rectContains(r2,target)){
@@ -45,19 +45,19 @@ var Character = (function() {
       this.route.addRoute(target.x,target.y);
     }
   }
-  
+
   _class.prototype.rectContains = function(rect, point) {
     return(
     (rect.x <= point.x && point.x < (rect.x + rect.width) )&&
     (rect.y <= point.y && point.y < (rect.y + rect.height) ));
   }
-  
+
   _class.prototype.pointEquals = function(p){
     return this.x == p.x && this.y == p.y;
   }
 
   _class.prototype.draw = function() {
-    image(this.img, this.x-(this.size/2), this.y-(this.size/2), this.size, this.size);
+    image(this.img, this.x-(this.size/2), this.y-(this.size/2), this.size, this.size+20);
   }
 
   return _class;

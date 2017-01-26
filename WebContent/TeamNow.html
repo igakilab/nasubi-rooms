@@ -20,9 +20,10 @@
     	}
     	return arg;
     }
-
     $(document).ready(function(){
     	var team = getUrlParameter().team;
+
+    	$(".teamname").text(team);
 
     	Feedback.teamNow(team, function(data){
     		$(".data-level").text(data.level);
@@ -30,7 +31,19 @@
     		$(".data-member2").text(data.member2);
     		$(".data-member3").text(data.member3);
     		$(".data-exp").text(data.exp);
+    		$(".data-task").text(data.task);
+    		$(".data-goal").text(data.goal+"時間");
+    		$(".data-nowtime").text(data.nowtime+"時間");
+    		$(".data-meter").attr("value", (data.nowtime / data.goal) * 100);
     	});
+
+        $(".to-teamdetail").on('click', function(){
+        	location.href = "TeamDetail.html?team=" + team;
+        });
+
+    	$(".to-teamtask").attr("href", "TeamTask.html?team=" + team);
+
+    	$(".to-teamnow").attr("href", "TeamNow.html?team=" + team);
     });
     </script>
 
@@ -39,14 +52,15 @@
 
 <body>
 	<div id="header">
-	<h1 class="teamname">もじゃの進捗状況</h1>
+	<h1><span class="teamname"></span>進捗状況</h1>
 	<ul id="menu">
 		<li id="menu01"><a href="TeamRank.html">トップ</a></li>
-		<li id="menu02"><a href="TeamNow.html?team=1">現状</a></li>
-		<li id="menu03"><a href="TeamTask.html">チームタスク</a></li>
+		<li id="menu02"><a class="to-teamnow" href="">現状</a></li>
+		<li id="menu03"><a class="to-teamtask" href="">チームタスク</a></li>
 	</ul>
 	</div>
 <div id="main">
+<br>
 <table border="1" width="50%">
 	<tr>
 		<th>Level</th>
@@ -68,21 +82,22 @@
 <table border="1" width="50%">
 	<tr  height="30">
 		<th>目標時間</th>
-		<th class="tasktime">6時間</th>
+		<th class="data-goal">6時間</th>
 	</tr>
 		<tr align="center" height="30">
 		<td>活動時間</td>
-		<td align="center"class="nowtime">3時間</td>
+		<td align="center"class="data-nowtime">3時間</td>
 	</tr>
 
 	<tr height="50">
-		<td align="center">折り返し地点だよ</td>
-		<td align="center"><meter align="left" max="100" low="30" high="70" optimum="80" value="60"></meter></td>
+		<td class="data-task"align="center"></td>
+		<td align="center"><meter class="data-meter" align="left" max="100" low="30" high="70" optimum="80" value="0"></meter></td>
 		<!-- <td align="center"><label ><progress value="50" max="100"><span>50</span>%</progress> （50%）</label ></td> -->
 	</tr>
 </table>
 
 <br><br>
+
 <div style=overflow-y:scroll;>
 <table border="1" width="50%">
 	<tr align="center">
@@ -93,10 +108,11 @@
 	<tr align="center">
 		<td>2017/1/1</td>
 		<td>90%</td>
-		<td><input type="button" value="詳細" onclick=""></td>
+		<td><input class="to-teamdetail" type="button" value="詳細"></td>
 	</tr>
 </table>
 </div>
+
 </div>
 </body>
 </html>

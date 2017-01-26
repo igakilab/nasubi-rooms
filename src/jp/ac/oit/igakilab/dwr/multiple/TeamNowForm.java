@@ -7,8 +7,29 @@ public class TeamNowForm {
 	private String member2;
 	private String member3;
 	private int exp;
+	private String[] task;
+	private int goal;
+	private int nowtime;
 
 
+	public int getNowtime() {
+		return nowtime;
+	}
+	public void setNowtime(int nowtime) {
+		this.nowtime = nowtime;
+	}
+	public int getGoal() {
+		return goal;
+	}
+	public void setGoal(int goal) {
+		this.goal = goal;
+	}
+	public String[] getTask() {
+		return task;
+	}
+	public void setTask(String[] task) {
+		this.task = task;
+	}
 	public String getName() {
 		return name;
 	}

@@ -3,12 +3,12 @@
 <head>
 	<meta charset="utf-8">
 	<title>井垣らぼチーム結成</title>
-	<!-- <script type="text/javascript" src="dwr/engine.js"></script>
-	<script type="text/javascript" src="dwr/util.js"></script> -->
+	<script type="text/javascript" src="dwr/engine.js"></script>
+	<script type="text/javascript" src="dwr/util.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/jquery.serialize.js"></script>
     <script type="text/javascript" src="js/flotr2.min.js"></script>
-    <!-- <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script> -->
+    <script type="text/javascript" src="dwr/interface/Feedback.js"></script>
     <script type="text/javascript" src="js/MemberMap.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
@@ -16,13 +16,24 @@
 	<div id="header"><h1>チーム詳細</h1></div>
 	<ul id="menu">
 		<li id="menu01"><a href="TeamRank.html">トップ</a></li>
-		<li id="menu02"><a href="TeamNow.html">現状</a></li>
-		<li id="menu03"><a href="TeamTask.html">チームタスク</a></li>
+		<li id="menu02"><a class = "to-teamnow" href="">現状</a></li>
+		<li id="menu03"><a class="to-teamtask" href="">チームタスク</a></li>
 	</ul>
 	<h3>1週間のチーム活動時間</h3>
 	<div id="editor-render-0" style="width:900px;height:600px;background-color:#ffffff;"></div>
 
 	<script>
+
+	function getUrlParameter(){
+    	var arg = new Object;
+    	var pair=location.search.substring(1).split('&');
+    	for(var i=0;pair[i];i++) {
+    	    var kv = pair[i].split('=');
+    	    arg[kv[0]]=kv[1];
+    	}
+    	return arg;
+    }
+
 	(function basic_timeline(container) {
 
 		  var
@@ -71,6 +82,10 @@
 		    grid: {
 		      horizontalLines : false
 		    }
+
+	    	$(".to-teamtask").attr("href", "TeamTask.html?team=" + team);
+
+	    	$(".to-teamnow").attr("href", "TeamNow.html?team=" + team);
 		  });
 		})(document.getElementById("editor-render-0"));
 	</script>

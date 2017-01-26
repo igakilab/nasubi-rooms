@@ -1,5 +1,5 @@
 var back;
-var images;
+var images = {};
 var characters = [];
 var canvas;
 var dest;
@@ -9,10 +9,18 @@ var tmp;
 var pt = null;
 
 function preload(){
-    images = {
-      "kitaba": loadImage("kitaba.png"),
-      "ryokun": loadImage("koike.png")
-    };
+	images.hayashi = loadImage("hayashi.png");
+	images.kichi= loadImage("kiichi.png");
+	images.gida = loadImage("gida.png");
+	images.shinya = loadImage("shinya.png");
+	images.uchida = loadImage("uchida.png");
+	images.kawazoe = loadImage("kawazoe.png");
+	images.mitui = loadImage("mitui.png");
+	images.kitaba = loadImage("kitaba.png");
+	images.ryokun = loadImage("ryokun.png");
+	images.aoki = loadImage("dekopon.png");
+	images.ueyama = loadImage("ueyama.png");
+	images.shimizu = loadImage("shimizu.png");
 
     back = loadImage("zemimap2016.png");
 
@@ -26,7 +34,7 @@ function reloadPosition(){
 
 	  	for(var i=0; i<reply.length; i++){
 	  	  var pos = reply[i];
-	  	  var img = images[pos.memberName];
+	  	  var img = images[pos.memberName] || images.gida;
 	  	  var chara = new Character(img);
 
 	  	  var tmp = replacePx(pos.positions[0]);
@@ -53,10 +61,10 @@ function setup() {
 function draw() {
   background(back);
 
-  if( pt ){
+ /* if( pt ){
     text("mouse (" + pt.x + ", " + pt.y + ")", 20, 50);
     text("mouse (" + pt.x + ", " + pt.y + ")", 20, 1000);
-  }
+  }*/
 
     characters.forEach(function(c){
       c.step(3);
